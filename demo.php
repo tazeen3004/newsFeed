@@ -1,4 +1,23 @@
+<?php
+$news = simplexml_load_file('http://feeds.feedburner.com/ndtvnews-top-stories');
 
+$feeds = array();
+
+$i = 0;
+
+foreach ($news->channel->item as $item) 
+{
+    preg_match('@src="([^"]+)"@', $item->description, $match);
+    $parts = explode('<font size="-1">', $item->description);
+
+    $feeds[$i]['title'] = (string) $item->title;
+    $feeds[$i]['link'] = (string) $item->link;
+    $feeds[$i]['description'] = (string) $item->description;
+
+
+    $i++;
+}
+?>
  <!DOCTYPE html>
 <html lang="en">
 
